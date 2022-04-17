@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use app\Http\Controllers\admin\Auth\AuthenticatedSessionController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +19,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
+
+
+// Route::get('/dashboard','App\\Http\\Controllers\\user\ServiceController@index')->name('dashboard');
+Route::resource('/dashboard','App\\Http\\Controllers\\user\\ServiceController')->only(['index','show'])->middleware(['auth']);
+// Route::resource('/dashboard/{id}', 'App\\Http\\Controllers\\user\\TicketController')->middleware(['auth']);
+Route::resource('/dashboard/create', 'App\\Http\\Controllers\\user\\TicketController')->middleware(['auth']);
+
+
+// User Routes
+
+
 
 
 
@@ -37,16 +49,19 @@ Route::namespace('App\Http\Controllers\admin')->prefix('admin')->name('admin.')-
         // Authentication Routes (Admin)
         Route::get('/login', 'AuthenticatedSessionController@create')->name('login');
         Route::post('/login', 'AuthenticatedSessionController@store')->name('admin_login');
+       
 
-        //Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
     });
     Route::middleware('admin')->group(function () {
         // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
       
         Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+        Route::resource('/services', 'ServiceController');
+        Route::resource('/Statuses', 'StatusController');
+        
         
         
     });
     Route::post('/logout', 'Auth\AuthenticatedSessionController@destroy')->name('logout');
 });
-// Route::get('/admin/login', 'App\Http\Controllers\admin\Auth\AuthenticatedSessionController@create')->name('login');
+

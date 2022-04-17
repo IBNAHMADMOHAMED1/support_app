@@ -26,11 +26,14 @@
                     {{ $header }}
                 </div>
             </header>
-
-            <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
+           
+            <!-- Page Content -->
+          
         </div>
+
+        
     </body>
 </html>
