@@ -9,4 +9,9 @@ class Ticket extends Model
 {
     use HasFactory;
     protected $fillable = ['title', 'description', 'userid', 'serviceid'];
+
+    public function Statuses()
+    {
+        return $this->belongsTo('App\Models\Status', 'statusid');
+    }
 }

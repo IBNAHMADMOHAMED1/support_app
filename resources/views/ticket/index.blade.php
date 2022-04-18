@@ -6,26 +6,44 @@
 
 
 
-    <div class="max-w-4xl px-10 my-4 py-6 bg-white rounded-lg shadow-md">
-        <div class="flex justify-between items-center">
-            <span class="font-light text-gray-600">mar 10, 2019</span>
-            <a class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500" href="#">Design</a>
-        </div>
-        <div class="mt-2">
-            <a class="text-2xl text-gray-700 font-bold hover:text-gray-600" href="#">Accessibility tools for designers and developers</a>
-            <p class="mt-2 text-gray-600">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!</p>
-        </div>
-        <div class="flex justify-between items-center mt-4">
-            <a class="text-blue-600 hover:underline" href="#">Read more</a>
-            <div>
-                <a class="flex items-center" href="#">
-                    <img class="mx-4 w-10 h-10 object-cover rounded-full hidden sm:block" src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80" alt="avatar">
-                    <h1 class="text-gray-700 font-bold">Khatab wedaa</h1>
-                </a>
+   <!-- post card -->
+@foreach ($Tickets as $ticket)
+<div class="flex bg-white shadow-lg rounded-lg mx-52 md:mx-auto my-54 mt-5 max-w-md md:max-w-2xl  "><!--horizantil margin is just for display-->
+   <div class="flex items-start px-4 py-4 pt-0 mt-20">
+      <img class="w-12 h-12 rounded-full object-cover mr-4 shadow" src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="avatar">
+      <div class="">
+         <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-gray-900 -mt-1">{{ Auth::user()->name }} </h2>
+            <small class="text-sm text-gray-700">{{ $ticket->created_at->diffForHumans() }}</small>
+         </div>
+         <p class="text-gray-700"> Joined {{ Auth::user()->created_at->diffForHumans() }}</p>
+         <p class="mt-3 text-gray-700 text-sm">
+            Lorem ipsum, dolor sit amet conse. Saepe optio minus rem dolor sit amet!
+         </p>
+         <div class="mt-4 flex items-center">
+            <div class="flex mr-2 text-gray-700 text-sm mr-3">
+               <svg fill="none" viewBox="0 0 24 24"  class="w-4 h-4 mr-1" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+               <span>12</span>
             </div>
-        </div>
-    </div>
-
+            <div class="flex mr-2 text-gray-700 text-sm mr-8">
+               <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-1" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+               </svg>
+               <span>8</span>
+            </div>
+            <div class="flex mr-2 text-gray-700 text-sm mr-4">
+               <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-1" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>
+               <span>share</span>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+@endforeach
 
 </x-app-layout>
 

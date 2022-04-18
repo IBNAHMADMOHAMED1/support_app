@@ -51,6 +51,7 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
+        // dd('service.show');
         $card = Service::find($id);
         return view('ticket.create', compact('card'));
     }   

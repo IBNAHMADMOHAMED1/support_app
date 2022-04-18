@@ -17,11 +17,17 @@
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('create.index')" :active="request()->routeIs('create.index')">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('ticket.index')" :active="request()->routeIs('ticket.index')">
+                        {{ __('My Tickets') }}
+                    </x-nav-link>
+                </div> --}}
+                  <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="/myticket" >
                         {{ __('My Tickets') }}
                     </x-nav-link>
                 </div>
+
             
             </div>
 

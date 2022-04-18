@@ -16,7 +16,10 @@ class TicketController extends Controller
      */
     public function index()
     {
-        dd('ticket.index');
+        $Tickets = Ticket::with('Statuses')->get();
+        compact('Tickets');
+        
+        return view('ticket.index', compact('Tickets'));
     }
 
     /**
@@ -38,12 +41,14 @@ class TicketController extends Controller
      */
     public function store(TikectStore $request)
     {
+        dd('ticket.store');
         
         
         $data = $request->only('title', 'description', 'userid', 'serviceid');
-        Ticket::create($data);
+      Ticket::create($data);
+        
        
-        return redirect()->route(' .index')->with('success', 'ticket created successfully');
+        return view('ticket.index')->with('success', 'ticket created successfully');
         
     }
 

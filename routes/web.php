@@ -27,8 +27,8 @@ Route::get('/', function () {
 // Route::get('/dashboard','App\\Http\\Controllers\\user\ServiceController@index')->name('dashboard');
 Route::resource('/dashboard','App\\Http\\Controllers\\user\\ServiceController')->only(['index','show'])->middleware(['auth']);
 // Route::resource('/dashboard/{id}', 'App\\Http\\Controllers\\user\\TicketController')->middleware(['auth']);
-Route::resource('/dashboard/create', 'App\\Http\\Controllers\\user\\TicketController')->middleware(['auth']);
-
+Route::resource('/dashboard/ticket', 'App\\Http\\Controllers\\user\\TicketController')->middleware(['auth']);
+Route::get('myticket', 'App\\Http\\Controllers\\user\\TicketController@index')->middleware(['auth']);
 
 // User Routes
 
