@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('tickets', function (Blueprint $table) {
+        Schema::table('comments', function (Blueprint $table) {
             
-            $table->foreignId('serviceid')->references('id')->on('services')->onDelete('cascade');
+            $table->boolean('check_is_finsh')->default(false);
+         
         });
-        
     }
 
     /**
@@ -27,8 +27,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('tickets', function (Blueprint $table) {
-            //
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropColumn('check_is_finsh');
+
         });
+       
     }
 };

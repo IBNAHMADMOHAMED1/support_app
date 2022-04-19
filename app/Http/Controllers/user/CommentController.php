@@ -4,10 +4,8 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\TikectStore;
-use App\Models\Ticket;
 
-class TicketController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +14,8 @@ class TicketController extends Controller
      */
     public function index()
     {
-        
-        
-        $Tickets = Ticket::with('Statuses')->where('userid', auth()->user()->id)->orderBy('created_at', 'desc')->get();
-        compact('Tickets');
-        
-        return view('ticket.index', compact('Tickets'));
-        }
+        //
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -31,8 +24,8 @@ class TicketController extends Controller
      */
     public function create()
     {
-        dd('ticket.create');
-
+        
+        return view('comment.create');
     }
 
     /**
@@ -41,32 +34,9 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TikectStore $request)
+    public function store(Request $request)
     {
-        // access the message session
-
-
-        $title = $request->input('title');
-        $description = $request->input('description');
-        $statusid = $request->input('statusid');
-        $userid = auth()->user()->id;
-        $serviceid = $request->input('serviceid');
-        $statusid = 1;
-   $data = [
-        'title' => $title,
-        'description' => $description,
-        'statusid' => $statusid,
-        'userid' => $userid,
-        'serviceid' => $serviceid,
-        'statusid' => $statusid,
-    ];
-   
-
-        
-      Ticket::create($data);
-        
-       
-        return redirect()->action('user\TicketController@index')->with('success', 'Ticket created!');
+        //
     }
 
     /**
@@ -77,8 +47,7 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        $ticket = Ticket::find($id);
-        return view('comment.create', compact('ticket'));
+        //
     }
 
     /**

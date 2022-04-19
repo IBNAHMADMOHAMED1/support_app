@@ -38,13 +38,13 @@
     
     
     <!-- This is an example component -->
-<div class="py-5">
+<div class="mx-6 py-6">
         <main class="h-full overflow-y-auto">
             <div class="container  mx-auto grid">
            
             
               <!-- Cards -->
-              <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+              <div class="grid gap-6 px-8  mb-8 md:grid-cols-2 xl:grid-cols-4">
                 <!-- Card -->
                 @foreach($cards as $card)
                 <a href="{{ route('dashboard.show',$card->id)}}"
@@ -65,6 +65,7 @@
             </div>
         </main>
     </div>
+  
 
 
 

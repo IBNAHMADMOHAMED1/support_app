@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->foreignId('statusid')->references('id')->on('statuses')->default(1);
             $table->foreignId('userid')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('serviceid')->references('id')->on('services')->onDelete('cascade');
+         
             $table->timestamps();
         });
     }
