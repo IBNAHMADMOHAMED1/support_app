@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\user;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\CommentRequest;
-use App\Models\Comment;
+use App\Http\Requests\TikectStore;
+use App\Models\Ticket;
 
-class CommentController extends Controller
+class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return view('comment.create');
+        $Tickets = Ticket::with('Statuses')->orderBy('created_at', 'desc')->get();
+        // dd($Tickets);
+        return view('Admin.dashboard', compact('Tickets'));
     }
 
     /**
@@ -26,8 +28,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        
-        return view('comment.create');
+        //
     }
 
     /**
@@ -36,15 +37,9 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CommentRequest $request)
+    public function store(Request $request)
     {
-        
-        $data = $request->except('_token');
-        
-        Comment::create($data);
-        return redirect()->action('user\TicketController@show',$id = $data['ticket_id'])->with('addcomment', 'Comment added successfully');
-
-        
+        //
     }
 
     /**
@@ -89,14 +84,6 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-       $comments= Comment::with('ticket')->find($id);
-       $id_ticket = $comments->ticket->id;
-         Comment::destroy($id);
-        return redirect()->action('user\TicketController@show',$id_ticket)->with('deletcomment', 'Comment deleted!');
-        // access to the ticket id from the comment
-
-
-
-        
+        //
     }
 }

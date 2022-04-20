@@ -17,10 +17,7 @@ class TicketController extends Controller
     public function index()
     {
         
-        
         $Tickets = Ticket::with('Statuses')->where('userid', auth()->user()->id)->orderBy('created_at', 'desc')->get();
-        compact('Tickets');
-        
         return view('ticket.index', compact('Tickets'));
         }
 
@@ -66,7 +63,7 @@ class TicketController extends Controller
       Ticket::create($data);
         
        
-        return redirect()->action('user\TicketController@index')->with('success', 'Ticket created!');
+        return redirect()->action('user\TicketController@index')->with('addcomment', 'Ticket created!');
     }
 
     /**
@@ -77,7 +74,8 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        $ticket = Ticket::find($id);
+        $ticket = Ticket::with('comments')->find($id);
+       
         return view('comment.create', compact('ticket'));
     }
 
@@ -112,6 +110,7 @@ class TicketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Ticket::destroy($id);
+        return redirect()->action('user\TicketController@index')->with('deletcomment', 'Ticket deleted!');
     }
 }

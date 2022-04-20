@@ -56,9 +56,10 @@ Route::namespace('App\Http\Controllers\admin')->prefix('admin')->name('admin.')-
     Route::middleware('admin')->group(function () {
         // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
       
-        Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+        // Route::get('/dashboard', 'HomeController@index')->name('dashboard');
         Route::resource('/services', 'ServiceController');
         Route::resource('/Statuses', 'StatusController');
+        Route::resource('/dashboard', 'TicketController');
         
         
         

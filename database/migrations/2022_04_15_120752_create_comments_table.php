@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->string('comment');
-            $table->foreignId('ticketid')->references('id')->on('tickets');
-            $table->foreignId('userid')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('ticket_id')->references('id')->on('tickets');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
