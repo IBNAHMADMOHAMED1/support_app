@@ -18,4 +18,8 @@ class Ticket extends Model
     {
         return $this->hasMany('App\Models\Comment');
     }
+    public function users()
+    {
+        return $this->belongsTo('App\Models\User', 'userid');
+    }
 }

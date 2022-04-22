@@ -4,14 +4,10 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\TikectStore;
-use App\Models\comment;
-use App\Models\Ticket;
-use App\Models\Status;
+use App\Models\Comment;
 
-use Illuminate\Support\Facades\Auth;
 
-class TicketController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +16,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $Tickets = Ticket::with('Statuses')->orderBy('created_at', 'desc')->get();
-        // dd($Tickets);
-        return view('Admin.dashboard', compact('Tickets'));
+        //
     }
 
     /**
@@ -43,7 +37,15 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    //   access the id of Admin
+       $request['user_id']= auth()->guard('admin')->user()->id;
+        $comment = $request->except('_token');
+        Comment::create($comment);
+        return redirect()->action('admin\TicketController@show',$id = $comment['ticket_id'])->with('addcomment', 'Comment added successfully');
+        
+       
+        
+        dd($comment);
     }
 
     /**
@@ -54,19 +56,7 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        $commentsadmin = comment::where('ticket_id', $id)->where('is_admin', 1)->orderBy('created_at', 'desc')->get();
-        // dd($commentsadmin);
-        $commentsuser = comment::where('ticket_id', $id)->where('is_admin', 0)->orderBy('created_at', 'desc')->get();
-
-        $admin = Auth::guard('admin')->user()->name;
-        
-        
-        $ticket = Ticket::with('Comments')->find($id);
-        
-        
-        $user = Ticket::with('Users')->find($id);
-     
-        return view('Admin.comment.create', compact('ticket','user','admin', 'commentsadmin', 'commentsuser'));
+        //
     }
 
     /**
@@ -77,7 +67,7 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+        //
     }
 
     /**
@@ -89,14 +79,7 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $statusid = $request->input('statusid');
-        $ticket = Ticket::find($id);
-        $ticket->statusid = $statusid;
-        $ticket->save();
-
-        
-    
-        return redirect()->action('admin\TicketController@index')->with('update', 'Ticket updated!');
+        //
     }
 
     /**

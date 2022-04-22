@@ -5,7 +5,11 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\TikectStore;
+use App\Models\Admin;
 use App\Models\Ticket;
+use App\Models\Status;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -74,9 +78,25 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        $ticket = Ticket::with('comments')->find($id);
+        $commentsadmin = comment::where('ticket_id', $id)->where('is_admin', 1)->orderBy('created_at', 'desc')->get();
+        // dd($commentsadmin);
+        $commentsuser = comment::where('ticket_id', $id)->where('is_admin', 0)->orderBy('created_at', 'desc')->get();
+
+        $admin = Admin::find(1)->name;
+      
+    
+
+
+
+
+
+        $ticket = Ticket::with('Comments')->find($id);
+
+
+        $user = Ticket::with('Users')->find($id);
+
+        return view('comment.create', compact('ticket', 'user', 'admin', 'commentsadmin', 'commentsuser'));
        
-        return view('comment.create', compact('ticket'));
     }
 
     /**
