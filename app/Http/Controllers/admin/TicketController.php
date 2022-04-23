@@ -21,8 +21,10 @@ class TicketController extends Controller
     public function index()
     {
         $Tickets = Ticket::with('Statuses')->orderBy('created_at', 'desc')->get();
+
+       
         // dd($Tickets);
-        return view('Admin.dashboard', compact('Tickets'));
+        return view('Admin.dashboard', compact('Tickets', 'comments'));
     }
 
     /**
@@ -54,19 +56,20 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        $commentsadmin = comment::where('ticket_id', $id)->where('is_admin', 1)->orderBy('created_at', 'desc')->get();
-        // dd($commentsadmin);
-        $commentsuser = comment::where('ticket_id', $id)->where('is_admin', 0)->orderBy('created_at', 'desc')->get();
+        $comments = Comment::where('ticket_id', $id)->orderBy('created_at', 'desc')->get();
 
+
+
+        $ticket = Ticket::with('Comments')->find($id);
+
+
+        $user = Ticket::with('Users')->find($id);
         $admin = Auth::guard('admin')->user()->name;
         
         
-        $ticket = Ticket::with('Comments')->find($id);
         
-        
-        $user = Ticket::with('Users')->find($id);
      
-        return view('Admin.comment.create', compact('ticket','user','admin', 'commentsadmin', 'commentsuser'));
+        return view('Admin.comment.create', compact('ticket','user','admin', 'comments'));
     }
 
     /**

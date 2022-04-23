@@ -30,10 +30,14 @@
                </form>
 
             </div>
-
+            {{$ticket->statuses->name}}
+            @if ($ticket->statuses->name == 'Nouveau' || $ticket->statuses->name == 'Répondu')
             <div class="flex  items-center justify-center ">
-               <form class="" method="POST" action="{{ route('comment.store') }}">
+               <form class="" method="POST" action='{{route('comment.store')}}'>
                   @csrf
+                  @method('POST')
+                  
+                  
                   <div class="flex flex-wrap -mx-3 mb-6">
                      <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Add a new comment</h2>
                      <div class="w-full md:w-full px-3 mb-2 mt-2">
@@ -47,7 +51,7 @@
                         <div class="flex items-start w-1/2 text-gray-700 px-2 mr-auto">
 
                            <div class="form-check">
-                              <input name="checkbox"
+                              <input name='check_is_finsh'
                                  class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                  type="checkbox" value="1" id="flexCheckDefault">
                               <label class="form-check-label inline-block text-gray-800" for="flexCheckDefault">
@@ -65,12 +69,13 @@
                </form>
             </div>
          </div>
+         @endif
       
 
          <hr class="divide-y divide-gray-200">
-         @foreach ($commentsadmin as $comment) 
-         @foreach ($commentsuser as $commentuser)
-        
+         @foreach ($comments as $comment) 
+         
+        @if ($comment->is_admin == 0)
          
          <div class="flex items-start space-x-6 pl-6 py-2 rounded-lg  ">
             <div class="shrink-0">
@@ -84,22 +89,21 @@
                   <h2 class="text-lg font-semibold text-gray-900">{{ Auth::user()->name }} </h2>
                   
                </span>
-                  <form method='post' action='{{ route('comment.destroy', $commentuser->id) }}'>
+                  <form method='post' action='{{ route('comment.destroy', $comment->id) }}'>
                      @csrf
                      @method('DELETE')
                      <button type='submit'
                         class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold text-red-500  rounded">Delete</button>
                </div>
-               <p class="text-gray-500"> created at {{$commentuser->created_at->diffForHumans() }}</p>
-               <div class='md:text-sm text-xs  '>{{ $commentuser->comment }}</div>
+               <p class="text-gray-500"> created at {{$comment->created_at->diffForHumans() }}</p>
+               <div class='md:text-sm text-xs  '>{{ $comment->comment }}</div>
             </div>
 
          </form>
       </div>
+      @endif
+      @if ($comment->is_admin == 1)
          
-   
-         
-         @endforeach
          <div class="flex items-start space-x-6 pl-6 py-2 rounded-lg  ">
             <div class='flex flex-col bg-gray-100 w-9/12 rounded-lg px-3 pb-3 '>
                <div class="title-font text-sm md:text-base flex items-center   lg:text-1xl font-bold pt-3 text-gray-900"> 
@@ -120,6 +124,7 @@
                   alt="Current profile photo" />
             </div>
          </div>
+      @endif
          {{--comments admin --}}
         
          @endforeach

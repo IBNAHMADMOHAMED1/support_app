@@ -4,10 +4,12 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 
-class CommentController extends Controller
+// Carbon is a package that helps us to work with dates and times.
+use Carbon\Carbon;
+
+class NotifactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +18,14 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return view('comment.create');
+        //notifaction comments seleceted by date time 
+        $comments =Comment::with('ticket')->where('created_at', '>=', Carbon::now()->subDays(7))->get();
+        // dd($comments);
+        return view('notifaction.index', compact('comments'));    
+        
+        
+
+
     }
 
     /**
@@ -26,8 +35,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        
-        return view('comment.create');
+        //
     }
 
     /**
@@ -36,17 +44,9 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CommentRequest $request)
+    public function store(Request $request)
     {
-       
-
-        $data = $request->except('_token');
-     
-        
-        Comment::create($data);
-        return redirect()->action('user\TicketController@show',$id = $data['ticket_id'])->with('addcomment', 'Comment added successfully');
-
-        
+        //
     }
 
     /**
@@ -91,14 +91,6 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-       $comments= Comment::with('ticket')->find($id);
-       $id_ticket = $comments->ticket->id;
-         Comment::destroy($id);
-        return redirect()->action('user\TicketController@show',$id_ticket)->with('deletcomment', 'Comment deleted!');
-        // access to the ticket id from the comment
-
-
-
-        
+        //
     }
 }

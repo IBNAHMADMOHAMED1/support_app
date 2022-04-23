@@ -1,5 +1,13 @@
 <x-app-layout>
    <x-slot name="header">
+      See Notification
+   <a href="{{route('notification.index')}}" class="">   
+           <span class="relative inline-block">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="sc-15iua2v-0 dIfPYi"><path d="M17.333 8.6c0-1.485-.562-2.91-1.562-3.96A5.208 5.208 0 0012 3c-1.415 0-2.771.59-3.771 1.64A5.745 5.745 0 006.667 8.6C6.667 15.133 4 17 4 17h16s-2.667-1.867-2.667-8.4zM14 20a2.186 2.186 0 01-.846.732A2.588 2.588 0 0112 21c-.405 0-.803-.092-1.154-.268A2.186 2.186 0 0110 20" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="colorStroke"></path></svg>  <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+{{ $notification }}
+  </span>
+</span>
+   </a>
    </x-slot>
 
 
@@ -75,14 +83,29 @@
                         </a>
                         </form>
                      </div>  
+                     <div class="flex ">
+                        <form method="post" action="{{ route('ticket.edit', $ticket->id)}}">
+                           @csrf
+                           @method('GET')
+                        <button type='submit'
+                       class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold text-green-500  rounded">Edit</button>
+                        </form>
                      <form method="post" action="{{ route('ticket.destroy', $ticket->id) }}">
                         @csrf
                         @method('DELETE')
                        
                       <button type='submit'
                         class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold text-red-500  rounded">Remove</button>
-
+                     </form>
+                     </div> 
                   </div>
+
+   
+ 
+{{-- create a @section --}}
+
+
+
               
             </div>
          </div>

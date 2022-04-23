@@ -22,4 +22,8 @@ class Ticket extends Model
     {
         return $this->belongsTo('App\Models\User', 'userid');
     }
+    public function services()
+    {
+        return $this->belongsTo('App\Models\Service', 'serviceid');
+    } 
 }

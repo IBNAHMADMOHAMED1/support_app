@@ -31,7 +31,7 @@
 
             </div>
 
-            @if ($ticket->statuses->name == 'Nouveau')
+            @if ($ticket->statuses->name == 'Nouveau' || $ticket->statuses->name == 'Répondu')
             <div class="flex  items-center justify-center ">
                <form class="" method="POST" action="{{ route('admin.comment.store') }}">
                   @csrf
@@ -59,13 +59,15 @@
                      </div>
                </form>
             </div>
-            @endif
+            <hr class="divide-y divide-gray-200">
          </div>
+            @endif
+         
       
 
-         <hr class="divide-y divide-gray-200">
-
-         @foreach ($commentsuser as $comment)
+      @foreach ($comments as $comment) 
+         
+        @if ($comment->is_admin == 0)
          <div class="relative flex items-start space-x-6 pl-6 py-2 rounded-lg  ">
            
             <div class="shrink-0">
@@ -80,8 +82,8 @@
                   </h2>
 
                   </span>
-
-                  @if ($comment->check_is_finsh = 1 )
+               
+                  @if ($comment->check_is_finsh == 1 )
                   <form method="post" action="{{ route('admin.tickte.update', $ticket->id) }}">
                      @csrf
                     @method('PUT')
@@ -93,6 +95,7 @@
                      </button>
                   
                   @endif
+                  
 
                  
                     
@@ -105,21 +108,34 @@
 
             </form>
          </div>
-         @endforeach
+         @endif
+         
+         @if ($comment->is_admin == 1)
 
-         @foreach ($commentsadmin as $comment)
          <div class="flex items-start space-x-6 pl-6 py-2 rounded-lg  ">
             <div class='flex flex-col bg-gray-100 w-9/12 rounded-lg px-3 pb-3 '>
-               <div class="title-font text-sm md:text-base flex items-center   lg:text-1xl font-bold pt-3 text-gray-900"> 
-                 <div> {{ $admin }} </div>
+             <div  class='flex items-center justify-between '>
+               <div class="title-font text-sm md:text-base flex items-center    lg:text-1xl font-bold pt-3 text-gray-900">
+                   {{ $admin }} 
                 <samp><img class="w-5 h-5 rounded-full" src="https://image.similarpng.com/very-thumbnail/2021/05/Blue-check-mark-sign-illustration-on-transparent-background-PNG.png" alt="Rounded avatar"></samp>
-             
-               </div>
+               </div>  
+                <form method='post' action='{{ route('comment.destroy', $comment->id) }}'  class="-" >
+                     @csrf
+                     @method('DELETE')
+                     <button type='submit'
+                       
+                     class="text-xs inline-block  justify-end py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold text-red-500  rounded">Delete</button>
+               </form> 
+               
+             </div>
               
-               <div class='md:text-sm text-xs  '>
-                  {{ $comment->comment }}
+               <div class='md:text-sm text-xs flex '>
+                  <p>{{ $comment->comment }}</p>
+                  
                </div>
-            </div>
+             
+                  </div>
+
             <div class="shrink-0">
 
                <img class="md:h-12 md:w-12 lg:h-12 lg:w-12 h-10 w-10 object-cover rounded-full"
@@ -127,6 +143,7 @@
                   alt="Current profile photo" />
             </div>
          </div>
+         @endif
          @endforeach
       </div>
    </div>

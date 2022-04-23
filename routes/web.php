@@ -30,7 +30,7 @@ Route::resource('/dashboard','App\\Http\\Controllers\\user\\ServiceController')-
 Route::resource('/dashboard/ticket', 'App\\Http\\Controllers\\user\\TicketController')->middleware(['auth']);
 Route::get('myticket', 'App\\Http\\Controllers\\user\\TicketController@index')->middleware(['auth']);
 Route::resource('/comment', 'App\\Http\\Controllers\\user\\CommentController')->middleware(['auth']);
-
+Route::resource('/notification', 'App\\Http\\Controllers\\user\\NotifactionController')->middleware(['auth']);
 // User Routes
 
 
@@ -61,6 +61,7 @@ Route::namespace('App\Http\Controllers\admin')->prefix('admin')->name('admin.')-
         Route::resource('/Statuses', 'StatusController');
         Route::resource('/tickte', 'TicketController');
         Route::resource('/comment', 'CommentController');
+        
         
         
         
