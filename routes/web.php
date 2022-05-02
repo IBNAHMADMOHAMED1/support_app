@@ -29,8 +29,9 @@ Route::resource('/dashboard','App\\Http\\Controllers\\user\\ServiceController')-
 // Route::resource('/dashboard/{id}', 'App\\Http\\Controllers\\user\\TicketController')->middleware(['auth']);
 Route::resource('/dashboard/ticket', 'App\\Http\\Controllers\\user\\TicketController')->middleware(['auth']);
 Route::get('myticket', 'App\\Http\\Controllers\\user\\TicketController@index')->middleware(['auth']);
-Route::resource('/comment', 'App\\Http\\Controllers\\user\\CommentController')->middleware(['auth']);
+Route::resource('/comment', 'App\\Http\\Controllers\\user\\CommentController')->except(['store'])->middleware(['auth']);
 Route::resource('/notification', 'App\\Http\\Controllers\\user\\NotifactionController')->middleware(['auth']);
+Route::resource('/commentuser', 'App\\Http\\Controllers\\user\\CommentController')->only(['store'])->middleware(['auth']);
 // User Routes
 
 

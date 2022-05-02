@@ -119,7 +119,7 @@
                    {{ $admin }} 
                 <samp><img class="w-5 h-5 rounded-full" src="https://image.similarpng.com/very-thumbnail/2021/05/Blue-check-mark-sign-illustration-on-transparent-background-PNG.png" alt="Rounded avatar"></samp>
                </div>  
-                <form method='post' action='{{ route('comment.destroy', $comment->id) }}'  class="-" >
+                <form method='post' action='{{ route('admin.comment.destroy', $comment->id) }}'  class="-" >
                      @csrf
                      @method('DELETE')
                      <button type='submit'

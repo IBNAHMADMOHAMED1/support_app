@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\Ticket;
 
 
 class CommentController extends Controller
@@ -40,12 +41,16 @@ class CommentController extends Controller
     //   access the id of Admin
        $request['user_id']= auth()->guard('admin')->user()->id;
         $comment = $request->except('_token');
+        // check if exist admin comment
+        // join this condition one time
+
+                
+        
         Comment::create($comment);
         return redirect()->action('admin\TicketController@show',$id = $comment['ticket_id'])->with('addcomment', 'Comment added successfully');
         
        
         
-        dd($comment);
     }
 
     /**
@@ -90,6 +95,15 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // delete comment
+        $comment = Comment::find($id);
+        $id_ticket = $comment->ticket->id;
+        // check if exist admin comment
+        // join this condition one time
+       
+        Comment::destroy($id);
+        return redirect()->action('admin\TicketController@show',$id_ticket)->with('deletcomment', 'Comment deleted!');
     }
+
+   
 }

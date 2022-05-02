@@ -33,10 +33,10 @@
             {{$ticket->statuses->name}}
             @if ($ticket->statuses->name == 'Nouveau' || $ticket->statuses->name == 'Répondu')
             <div class="flex  items-center justify-center ">
-               <form class="" method="POST" action='{{route('comment.store')}}'>
+               <form class="" method="POST" action='{{ route('commentuser.store') }}'>
                   @csrf
-                  @method('POST')
-                  
+                 
+                 
                   
                   <div class="flex flex-wrap -mx-3 mb-6">
                      <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Add a new comment</h2>

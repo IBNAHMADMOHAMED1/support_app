@@ -10,6 +10,7 @@ use App\Models\Ticket;
 use App\Models\Status;
 
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\This;
 
 class TicketController extends Controller
 {
@@ -21,6 +22,8 @@ class TicketController extends Controller
     public function index()
     {
         $Tickets = Ticket::with('Statuses')->orderBy('created_at', 'desc')->get();
+
+        // check if ticket has admin comment change status to closed
 
        
         // dd($Tickets);
@@ -54,7 +57,7 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function get($id)
     {
         $comments = Comment::where('ticket_id', $id)->orderBy('created_at', 'desc')->get();
 
@@ -65,12 +68,45 @@ class TicketController extends Controller
 
         $user = Ticket::with('Users')->find($id);
         $admin = Auth::guard('admin')->user()->name;
+        $data = [
+            'ticket' => $ticket,
+            'comments' => $comments,
+            'user' => $user,
+            'admin' => $admin,
+        ];
+        return $data;
         
-        
-        
-     
-        return view('Admin.comment.create', compact('ticket','user','admin', 'comments'));
     }
+    public function statusTicket($ticket, $comments, $user, $admin)
+    {
+        if ($comments->count() <= 0) {
+           $ticket->statusid = 1;
+            $ticket->save();
+        } 
+
+        foreach ($comments as $comment) {
+            if ($comment->check_is_finsh== 1) {
+                
+                $ticket->statusid = 3;
+                $ticket->save();
+                break;
+            }
+           elseif ($comment->is_admin == 1) {
+             
+                $ticket->statusid = 2;
+                $ticket->save();
+           }
+                   
+        }
+    }
+   
+    public function show($id)
+    {
+        $data = $this->get($id);
+        $this->statusTicket($data['ticket'], $data['comments'], $data['user'], $data['admin']);
+        return view('Admin.comment.create', $data);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -112,4 +148,11 @@ class TicketController extends Controller
     {
         //
     }
+
+    
+
+    //  function of status ticket when ticket hase comment by admin
+  
+   
+  
 }

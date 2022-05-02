@@ -91,6 +91,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
+        dd('destroy');
        $comments= Comment::with('ticket')->find($id);
        $id_ticket = $comments->ticket->id;
          Comment::destroy($id);
